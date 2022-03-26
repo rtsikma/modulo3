@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'modulo3' => array($baseDir . '/src'),
-    'FSM' => array($baseDir . '/src/library/FSM'),
+    'fsm' => array($baseDir . '/src'),
 );
