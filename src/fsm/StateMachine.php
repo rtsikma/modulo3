@@ -1,7 +1,6 @@
 <?php
 
 namespace fsm;
-use Exception;
 
 class StateMachine
 {
@@ -19,7 +18,7 @@ class StateMachine
      * Adds a new state to the state machine
      * @param State $state
      * @return void
-     * @throws Exception
+     * @throws \Exception
      */
     public function AddState(State $state)
     {
@@ -27,7 +26,7 @@ class StateMachine
         if ($state->IsInitial()) {
             if (!empty($this->InitialState)) {
                 $stateName = $state->Name();
-                throw new Exception("Adding more than one initial state $stateName");
+                throw new \Exception("Adding more than one initial state $stateName");
             }
             $this->InitialState = $state;
             $this->CurrentState = $state;
@@ -77,7 +76,7 @@ class StateMachine
     /**
      * @param string $input
      * @return void
-     * @throws Exception
+     * @throws \Exception
      */
     public function Step(string $input)
     {

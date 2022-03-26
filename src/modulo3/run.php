@@ -9,7 +9,7 @@ if (count($argv) !== 2 || strlen(trim($argv[1])) < 0 )
     echo ("Usage: php.exe $argv[0] <binaryString>");
     exit(1);
 }
-
+$mod3 = null;
 try {
     $mod3 = new Modulo3($argv[1]);
     $result = $mod3->run();

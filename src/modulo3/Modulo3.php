@@ -18,6 +18,16 @@ class Modulo3 implements StateMachineRunner
     public function __construct(string $input)
     {
         $this->SetInput($input);
+    }
+
+    /**
+     * Initializes the Modulo class
+     *
+     * @return void
+     * @throws \Exception
+     */
+    public function Init()
+    {
         $this->StateMachine = new StateMachine();
 
         $allInputs = ["0", "1"];
@@ -44,26 +54,40 @@ class Modulo3 implements StateMachineRunner
      * @param string $input
      * @return bool
      */
-    private function isBinaryString(string $input) : bool
+    public function IsValidInput(string $input) : bool
     {
         return preg_match("/^[01]+$/", $input);
     }
 
+    /**
+     * @param $input
+     * @return void
+     */
     public function SetInput($input)
     {
-        if (!$this->isBinaryString($input))
+        if (!$this->IsValidInput($input))
             throw new \InvalidArgumentException("Invalid Input: Expecting 0's and 1's");
         $this->input = $input;
     }
 
+    /**
+     * Runs the state machine
+     *
+     * @return bool
+     * @throws \Exception
+     */
     public function run() : bool
     {
+        if (empty($this->StateMachine))
+        {
+            $this->Init();
+        }
         try {
             $allInputs = str_split($this->input);
             foreach ($allInputs as $input) {
                 $this->StateMachine->Step($input);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $name = $this->StateMachine->GetCurrentState()->Name();
             $this->LastError = "Error stepping from $name: " . $e->getMessage();
             return false;
@@ -71,11 +95,19 @@ class Modulo3 implements StateMachineRunner
         return true;
     }
 
+    /**
+     * Returns the last error of the State Machine
+     * @return string
+     */
     public function GetLastError(): string
     {
         return $this->LastError;
     }
 
+    /**
+     * Returns the result of State Machine Run
+     * @return string
+     */
     public function GetResult() : string
     {
         $state = $this->StateMachine->GetCurrentState();

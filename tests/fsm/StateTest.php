@@ -1,6 +1,5 @@
 <?php
 
-use fsm;
 use PHPUnit\Framework\TestCase;
 
 class StateTest extends TestCase
